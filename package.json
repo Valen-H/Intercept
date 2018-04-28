@@ -1,0 +1,19 @@
+{
+  "name": "intercept",
+  "version": "1.0.0",
+  "description": "A steam write interceptor.",
+  "main": "intercept.js",
+  "scripts": {
+    "test": "npm i -g"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "intercept",
+    "stream"
+  ],
+  "author": "ValentinHacker",
+  "license": "ISC"
+}
