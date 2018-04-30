@@ -3,7 +3,7 @@ A stream proxy utility.
   
 ## Setup  
 ```javascript
-const intercept = require('intercept');
+const intercept = require('stream-intercept');
 
 var unhook = intercept.write(process.stdout, (...args) => {
 	return args[0] + new Date(); //appends the date after every line on console! °_°"

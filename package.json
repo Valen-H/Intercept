@@ -1,19 +1,60 @@
 {
-  "name": "intercept",
-  "version": "1.0.0",
-  "description": "A steam write interceptor.",
+  "name": "stream-intercept",
+  "version": "1.0.1-0",
+  "description": "A steam write/read interceptor.",
   "main": "intercept.js",
   "scripts": {
     "test": "npm i -g"
-  },
-  "repository": {
-    "type": "git",
-    "url": "none"
   },
   "keywords": [
     "intercept",
     "stream"
   ],
-  "author": "ValentinHacker",
-  "license": "ISC"
+  "license": "ISC",
+  "author": "ValentinHacker <alternativexxxy@gmail.com> (https://github.com/ValentinHacker)",
+  "contributors": [],
+  "files": [
+    "*"
+  ],
+  "bin": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValentinHacker/Intercept.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ValentinHacker/Intercept/issues",
+    "email": "alternativexxxy@gmail.com"
+  },
+  "homepage": "https://github.com/ValentinHacker/Intercept",
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "config": {
+    "PORT": 8080
+  },
+  "engines": {
+    "node": ">=7.0",
+    "npm": "~3.10"
+  },
+  "os": [
+    "linux",
+    "android"
+  ],
+  "cpu": [
+    "arm"
+  ],
+  "directories": {
+    "man": "./man",
+    "doc": "./doc",
+    "example": "./example",
+    "test": "./test",
+    "bin": "./bin",
+    "lib": "./lib"
+  },
+  "preferGlobal": true,
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }
