@@ -20,17 +20,22 @@ exports.write = function write(stream = process.stdout, intercept = it => it) {
 			return stream._data.split(os.EOL).length;
 		}
 	});
+	Object.defineProperty(stream, '_indent', {
+		get value() {
+			return stream._data.split(os.EOL).pop().length;
+		}
+	});
 	
 	stream.write = function(...args) {
 		args[0] = interceptor(intercept, ...args);
-		this._data += Decoder.write(args[0]);
+		if (args[0]) this._data += (args[0] instanceof Buffer) ? Decoder.write(args[0] || Buffer.alloc(0)) : args[0];
 		this.emit('data', ...args);
 		return _old_write.call(this, ...args);
 	};
 	
 	function interceptor(callback, ...args) {
 		var result = callback(...args);
-		if (typeof result == 'string') {
+		if (typeof result == 'string' || (result instanceof Buffer)) {
 			args[0] = result;
 		}
 		return args[0];
@@ -54,17 +59,28 @@ exports.read = function read(stream = process.stdin, intercept = it => it) {
 	
 	var _old_read = stream.read;
 	stream._datar = '';
+	Object.defineProperty(stream, '_linesr', {
+		get value() {
+			return stream._datar.split(os.EOL).length;
+		}
+	});
+	Object.defineProperty(stream, '_indentr', {
+		get value() {
+			return stream._datar.split(os.EOL).pop().length;
+		}
+	});
 	
 	stream.read = function(...args) {
 		var data = _old_read.call(this, ...args);
 		data = interceptor(intercept, data, ...args);
-		this._datar += Decoder.write(data);
+		if (data) this._datar += (data instanceof Buffer) ? Decoder.write(data || Buffer.alloc(0)) : data;
+		this.emit('read', data, ...args);
 		return data;
 	};
 	
-	function interceptor(callback, string, ...args) {
-		var result = callback(string, ...args);
-		if (result || typeof result == 'string') {
+	function interceptor(callback, ...args) {
+		var result = callback(args[0], ...args);
+		if (typeof result == 'string' || (result instanceof Buffer)) {
 			args[0] = result;
 		}
 		return args[0];
@@ -75,6 +91,8 @@ exports.read = function read(stream = process.stdin, intercept = it => it) {
 	};
 };
 
-process._stdout = exports.write(process.stdout);
-process._stderr = exports.write(process.stderr);
-process._stdin = exports.read(process.stdin);
+try {
+	process._stdout = exports.write(process.stdout);
+	process._stderr = exports.write(process.stderr);
+	process._stdin = exports.read(process.stdin);
+} catch(ex) { }
